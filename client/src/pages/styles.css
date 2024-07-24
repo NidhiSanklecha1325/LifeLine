@@ -45,40 +45,64 @@ footer .text-center {
 }
 
 /* Navbar Styles */
-nav {
-  background-color: #ffffff;
-  border-bottom: 1px solid #ddd;
+.navbar-custom {
+  background-color: #ffffff; /* White background */
+  border-bottom: 1px solid #ddd; /* Subtle border */
   padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
-nav img {
+.navbar-custom .navbar-brand img {
   height: 50px;
 }
 
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
+.navbar-custom .navbar-toggler-icon {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><path stroke="%23c8102e" stroke-width="2" d="M5 7h20M5 15h20M5 23h20"/></svg>'); /* Dark red toggle icon */
 }
 
-nav ul li {
-  margin-right: 20px;
+.nav-link-custom {
+  color: #333; /* Dark text color */
+  font-weight: 500; /* Medium font weight */
+  font-size: 16px; /* Consistent font size */
+  transition: color 0.3s ease, border-bottom 0.3s ease; /* Smooth transitions */
 }
 
-nav ul li a {
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
+.nav-link-custom:hover {
+  color: #c8102e; /* Dark red color on hover */
+  border-bottom: 2px solid #c8102e; /* Underline effect on hover */
 }
 
-nav ul li a:hover {
-  color: #d62027;
+.btn-custom {
+  background-color: #ffffff; /* White background for buttons */
+  color: #c8102e; /* Dark red text color */
+  border: 1px solid #c8102e; /* Dark red border */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
 }
+
+.btn-custom:hover {
+  background-color: #c8102e; /* Dark red background on hover */
+  color: #ffffff; /* White text color on hover */
+}
+
+.navbar-text-custom {
+  color: #333; /* Dark text color for welcome message */
+  margin-right: 15px; /* Spacing between text and button */
+}
+
+@media (max-width: 768px) {
+  .navbar-custom .navbar-collapse {
+    text-align: center;
+  }
+
+  .navbar-custom .navbar-nav {
+    margin-top: 10px;
+  }
+
+  .navbar-custom .nav-link-custom {
+    font-size: 18px;
+    margin: 5px 0;
+  }
+}
+
 
 /* Header Styles */
 header {
@@ -99,6 +123,72 @@ header .lead {
 
 header .btn {
   margin-top: 1.5rem;
+}
+
+/* Custom styles for the header */
+.custom-header {
+  background: linear-gradient(to right, #d62027, #ff7e5f); /* Gradient background */
+  color: #fff; /* White text color */
+  border-radius: 10px; /* Rounded corners */
+  padding: 50px 0; /* Adjust padding as needed */
+}
+
+.custom-header .display-4 {
+  font-size: 3rem; /* Adjust font size */
+  font-weight: bold; /* Bold text */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for better readability */
+}
+
+.custom-header .lead {
+  font-size: 1.25rem; /* Adjust font size for the lead text */
+  font-weight: 300; /* Light weight text */
+}
+
+
+/* General styles for equal height columns */
+.d-flex {
+  display: flex;
+}
+
+.flex-fill {
+  flex: 1;
+}
+
+/* Management Centers Section Styles */
+.management-centers-section {
+  background-color: #ffffff;
+  padding: 3rem 0;
+}
+
+.management-centers-section h2 {
+  color: #d62027;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.management-centers-section .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.management-centers-section .card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.management-centers-section .card-title {
+  color: #d62027;
+}
+
+.management-centers-section .btn-outline-primary {
+  border-color: #d62027;
+  color: #d62027;
+}
+
+.management-centers-section .btn-outline-primary:hover {
+  background-color: #d62027;
+  color: #ffffff;
 }
 
 /* Card Styles */
@@ -190,49 +280,255 @@ header .btn {
   text-align: left;
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-  nav {
-    flex-direction: column;
-  }
-
-  nav ul {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  nav ul li {
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-
-  header {
-    padding: 3rem 1rem;
-  }
-
-  header .display-4 {
-    font-size: 2rem;
-  }
-
-  header .lead {
-    font-size: 1rem;
-  }
-
-  .story-section-title {
-    font-size: 1.25rem;
-  }
-
-  .card-flip .card {
-    height: 100%;
-  }
+/* Donation Services Section */
+.donation-services-section {
+  background-color: #f8f9fa;
 }
 
-@media (max-width: 576px) {
-  .border-left {
-    border-left: 0 !important;
-  }
-
-  .border-top {
-    border-top: 0 !important;
-  }
+.donation-services-section .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.donation-services-section .card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.donation-services-section .card-title {
+  color: #d62027;
+}
+
+.donation-services-section .btn-outline-primary {
+  border-color: #d62027;
+  color: #d62027;
+}
+
+.donation-services-section .btn-outline-primary:hover {
+  background-color: #d62027;
+  color: #ffffff;
+}
+
+.donation-services-section ol {
+  padding-left: 20px;
+}
+
+/* Styles for the search and filter section */
+.search-filter-section {
+  background: #f8f9fa; /* Light grey background to differentiate from the main content */
+  border-radius: 8px; /* Rounded corners for a modern look */
+  padding: 20px; /* Padding around the content */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+.search-filter-section .form-group {
+  margin-bottom: 20px; /* Space between form elements */
+}
+
+.search-filter-section label {
+  font-size: 1.1rem; /* Slightly larger font size for labels */
+  font-weight: 500; /* Medium weight text */
+  color: #333; /* Dark grey color for better readability */
+}
+
+.search-filter-section .form-control {
+  border: 1px solid #ced4da; /* Light border for input fields */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px; /* Padding inside input fields */
+  font-size: 1rem; /* Font size for input text */
+  transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+.search-filter-section .form-control:focus {
+  border-color: #dc3545; /* Blood red border on focus */
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25); /* Blood red shadow on focus */
+}
+
+.search-filter-section .btn-danger {
+  background-color: rgb(235, 92, 92); /* Blood red background for the button */
+  border: none; /* Remove default border */
+  color: #fff; /* White text color */
+  font-size: 1rem; /* Font size for the button */
+  padding: 10px 20px; /* Padding inside the button */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition */
+}
+
+.search-filter-section .btn-danger:hover {
+  background-color: #c82333; /* Darker blood red on hover */
+  border-color: #c82333; /* Darker border on hover */
+}
+
+/* Blood droplet animation */
+@keyframes drop {
+  0% { top: -60px; opacity: 1; }
+  100% { top: 100vh; opacity: 0; }
+}
+
+.blood-droplet {
+  position: absolute;
+  width: 20px; /* Adjust size */
+  height: 30px; /* Adjust size */
+  background: rgb(235, 92, 92); /* Darker blood red */
+  border-radius: 50%; /* Make the shape circular */
+  animation: drop 4s infinite;
+  opacity: 0.8;
+}
+
+/* Position and delay adjustments for multiple droplets */
+.blood-droplet:nth-child(1) {
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.blood-droplet:nth-child(2) {
+  left: 30%;
+  animation-delay: 0.5s;
+}
+
+.blood-droplet:nth-child(3) {
+  left: 50%;
+  animation-delay: 1s;
+}
+
+.blood-droplet:nth-child(4) {
+  left: 70%;
+  animation-delay: 1.5s;
+}
+
+.blood-droplet:nth-child(5) {
+  left: 90%;
+  animation-delay: 2s;
+}
+
+/* Style for the "Ways to Donate" section */
+.ways-to-donate-section {
+  position: relative;
+  background-color: #fff5f5; /* Very light red */
+  color: #333; /* Dark text for better readability */
+  border-radius: 10px;
+  padding: 40px;
+  margin: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ways-to-donate-section h2 {
+  color: rgb(235, 92, 92); /* Blood red */
+  font-size: 2.5rem; /* Larger heading for impact */
+  margin-bottom: 20px;
+}
+
+.ways-to-donate-section p {
+  font-size: 1.2rem; /* Slightly larger text */
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.ways-to-donate-section .btn {
+  margin: 10px 5px;
+  font-weight: bold;
+}
+
+.ways-to-donate-section .btn-outline-primary {
+  border-color: #c8102e; /* Blood red border */
+  color: #c8102e; /* Blood red text */
+}
+
+.ways-to-donate-section .btn-outline-secondary {
+  border-color: #ff6347; /* Tomato red */
+  color: #ff6347; /* Tomato red text */
+}
+
+.ways-to-donate-section .btn:hover {
+  background-color: #c8102e;
+  color: #fff;
+}
+
+.ways-to-donate-section .btn-outline-secondary:hover {
+  background-color: #ff6347;
+  color: #fff;
+}
+
+.text-center a {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.text-center .btn {
+  font-size: 1.1rem;
+}
+
+/* Specific styling for the "Information on Recognition Program" button */
+.information-btn {
+  background-color: #f8d7da; /* Light red background */
+  color: #721c24; /* Dark red text */
+  border: 2px solid #721c24; /* Dark red border */
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  margin: 20px auto;
+}
+
+.information-btn:hover {
+  background-color: #721c24; /* Dark red background */
+  color: #fff; /* White text */
+  border-color: #721c24;
+}
+
+/* Styling for the Meet Our Contributors section */
+.individuals-section {
+  background-color: #ffffff; /* Light red background for the section */
+  padding: 40px 0; /* Enhanced padding */
+  border-top: 2px solid #eb99a6; /* Dark red border on top */
+}
+
+.individuals-section h2 {
+  color: #e85313; /* Dark red color for the heading */
+  font-weight: bold;
+  margin-bottom: 30px; /* Spacing below the heading */
+}
+
+.individuals-section .flip-card {
+  border: 1px solid #e26131; /* Dark red border for flip cards */
+  border-radius: 8px; /* Rounded corners for the flip cards */
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow effect */
+  transition: transform 0.3s ease-in-out; /* Smooth flip effect */
+}
+
+.individuals-section .flip-card:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.individuals-section .flip-card .flip-card-front {
+  background-color: #ffffff; /* White background for the front side */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.individuals-section .flip-card .flip-card-back {
+  background-color: rgb(235, 92, 92); /* Dark red background for the back side */
+  color: #ffffff; /* White text color for contrast */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.flip-card-front h3 {
+  margin-top: 10px;
+  color: rgb(235, 92, 92); /* Red color for the contributor's name */
+  font-size: 1.2em; /* Slightly larger font size */
+  font-weight: bold;
+}
+

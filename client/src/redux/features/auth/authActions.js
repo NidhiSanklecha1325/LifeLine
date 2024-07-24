@@ -7,10 +7,14 @@ export const userLogin = createAsyncThunk(
     try {
       const { data } = await API.post("/auth/login", { role, email, password });
       //store token
+      
       if (data.success) {
         alert(data.message);
+        console.log(data)
         localStorage.setItem("token", data.token);
-        window.location.replace("/");
+        localStorage.setItem("user",data.user.firstName)
+        window.location.assign("/dashboard");
+        
       }
       return data;
     } catch (error) {
@@ -32,7 +36,9 @@ export const userRegister = createAsyncThunk(
         role,
         email,
         password,
-        dateOfBirth 
+        dateOfBirth ,
+        postalCode,
+            phoneNumber
         
       },
       { rejectWithValue }
@@ -44,7 +50,9 @@ export const userRegister = createAsyncThunk(
             role,
             email,
             password,
-            dateOfBirth
+            dateOfBirth,
+            postalCode,
+            phoneNumber
         });
         if (data?.success) {
           alert("User Registerd Successfully");
@@ -61,3 +69,40 @@ export const userRegister = createAsyncThunk(
       }
     }
   );
+
+  export const getCurrentUser = createAsyncThunk(
+    'auth/getCurrentUser',
+    async({rejectWithValue}) => {
+      try {
+        const res = await API.get('/auth/current-user')
+        if(res?.data){
+          return res?.data;
+        }
+      } catch (error) {
+        if (error.response && error.response.data.message) {
+          return rejectWithValue(error.response.data.message);
+        } else {
+          return rejectWithValue(error.message);
+        }
+      }
+    }
+  )
+
+  export const addCenter = createAsyncThunk(
+    'auth/addCenter',
+    async({city,centerName,centerAddress},{rejectWithValue}) =>{
+      try {
+        const {data} = await API.post('/auth/addCenter',{city,centerName,centerAddress})
+        if(data?.success){
+          alert(data.message)
+          window.location.replace("/add-donor-centers")
+        }
+      } catch (error) {
+        if (error.response && error.response.data.message) {
+          return rejectWithValue(error.response.data.message);
+        } else {
+          return rejectWithValue(error.message);
+        }
+      }
+    }
+  )

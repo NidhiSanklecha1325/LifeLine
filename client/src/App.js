@@ -5,6 +5,11 @@ import {  Route } from 'react-router-dom';
 import Login from './pages/Login.js'; // Assuming Login.jsx exports default correctly
 import { Routes } from 'react-router-dom'; 
 import Home from './pages/Home.js';
+import Dashboard from './pages/dashboard.js';
+import ProtectedRoutes from './components/routes/ProtectedRoutes.js';
+import AddDonorCenters from './pages/AddDonorCenters.js';
+import BookAppointment from './pages/Donor/BookAppointment.js';
+import Profile from './pages/Donor/Profile.js';
 /* class Nav extends React.Component {
   render() {
     return (
@@ -41,8 +46,17 @@ function App() {
   return (
     <div>
         <Routes> 
-          <Route path="/" element={<Home />} />
+
+          <Route path="/" element={
+            
+            <Home />
+            
+            } />
+            <Route path='/add-donor-centers' element={<AddDonorCenters/>} />
+            <Route path='/book-appointment' element={<BookAppointment/>} />
+            <Route path='/profile' element={<Profile/>} />
           <Route path="/login" element={<Login />} />
+          <Route path='/dashboard' element={<ProtectedRoutes><Dashboard/></ProtectedRoutes>}/>
         </Routes>
         </div>
   );

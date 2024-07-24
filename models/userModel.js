@@ -16,6 +16,13 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:[true,"Required"]
     },
+    postalCode:{
+        type:String,
+    
+    },
+            phoneNumber:{
+                type: Number
+            },
     dateofBirth :{
         type : Date
     },

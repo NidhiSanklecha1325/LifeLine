@@ -1,4 +1,5 @@
 const { getDB } = require("../config/database");
+const centerModel = require("../models/centerModel");
 const userModel = require("../models/userModel");
 const bcrypt = require('bcryptjs')
 const jwt = require("jsonwebtoken");
@@ -66,6 +67,7 @@ const loginController = async (req, res) => {
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
         expiresIn: "1d",
       });
+      console.log(user)
       return res.status(200).send({
         success: true,
         message: "Login Successfully",
@@ -82,4 +84,44 @@ const loginController = async (req, res) => {
     }
   };
 
-module.exports = {registerController, loginController};
+const currentUserController = async(req,res) =>{
+  try {
+    const user = await userModel.findOne({_id:req.body.userId})
+    return res.status(200).send({
+      success:true,
+      message: "User fetched successfully",
+      user
+    })
+    
+  } catch (error) {
+    console.log(error)
+    return res.status(500).send({
+      success: false,
+      message: "Unable to get user",
+      error
+    })
+  }
+}
+const addCenterController = async(req,res) => {
+  console.log(req.body)
+  try {
+    console.log(req.body)
+    const user = new centerModel(req.body)
+        await user.save()
+        return res.status(201).send({   
+            success: true,
+            message: "Center Added Successfully",
+            user,
+          });
+    
+  } catch (error) {
+    console.log(error)
+    return res.status(500).send({
+      success: false,
+      message: "Unable to add center",
+      error
+    })
+  }
+
+}
+module.exports = {registerController, loginController,currentUserController, addCenterController};
