@@ -1,4 +1,3 @@
-const { getDB } = require("../config/database");
 const centerModel = require("../models/centerModel");
 const userModel = require("../models/userModel");
 const bcrypt = require('bcryptjs')

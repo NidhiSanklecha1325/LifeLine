@@ -1,14 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Layout from '../../components/shared/Layout'
 import Nav from 'react-bootstrap/Nav';
 import {Row, Col, Button} from 'react-bootstrap';
 import Tab from 'react-bootstrap/Tab';
 import Form from 'react-bootstrap/Form';
 import { useSelector } from 'react-redux';
+import API from '../../services/API';
 
 
 const Profile = () => {
     const {user} = useSelector(state => state.auth)
+    const [email,setEmail] = useState("")
+    const [currentPassword,setCurrentPassword] = useState("")
+    const [confirmPassword,setConfirmPassword] = useState("")
+    const [newPassword,setNewPassword] = useState("")
+
+    const changePassword = async (e,email) =>{
+      setEmail(user.email);
+      console.log(user.email)
+      e.preventDefault();
+      try {
+        
+        const {data} = await API.post("/donor/change-password", {email,currentPassword,newPassword})
+        console.log(data)
+        if(data?.success){
+          alert(data?.message)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
   return (
     <Layout>
       <h2>My Profile</h2>
@@ -18,7 +39,7 @@ const Profile = () => {
           <Nav variant="pills" >
             <Nav.Item>
               <Nav.Link eventKey="myProfile">My profile</Nav.Link>
-            </Nav.Item>
+            </Nav.Item> 
             <Nav.Item>
               <Nav.Link eventKey="changePassword">Change Password</Nav.Link>
             </Nav.Item>
@@ -82,7 +103,7 @@ const Profile = () => {
                 <h3>Contact Information</h3>
                 <Form.Group className="mb-3">
                     <Form.Label>Phone Number</Form.Label>
-                    <Form.Control placeholder="" disabled />
+                    <Form.Control placeholder={user.phoneNumber} disabled />
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Email address</Form.Label>
@@ -95,19 +116,26 @@ const Profile = () => {
             </Tab.Pane>
             <Tab.Pane eventKey="changePassword">
                 
-                <Form>
+                <Form onSubmit={(e) => changePassword(e,user.email)}>
                 <h3>Update My Password</h3>
+                <Form.Control
+        type="email"
+        id="email"
+        name='email'
+        value={user.email}
+      />
                 <Form.Label htmlFor="currentPassword">Current Password</Form.Label>
       <Form.Control
         type="password"
-        id="currentPassword"
-        placeholder='Current Password'
+        id="currentPassword" 
+        name='currentPassword' value={currentPassword} onChange={(e)=> setCurrentPassword(e.target.value)}
         aria-describedby="passwordHelpBlock"
       />
       <Form.Label htmlFor="newPassword">New Password</Form.Label>
       <Form.Control
         type="password"
         id="newPassword"
+        name='newPassword' value={newPassword} onChange={(e) => setNewPassword(e.target.value)}
         aria-describedby="passwordHelpBlock"
       />
       <Form.Label htmlFor="repeatPassword">Repeat Password</Form.Label>

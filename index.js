@@ -38,6 +38,7 @@ app.use(morgan('dev'))
 
 app.use('/test', require("./routes/testRoutes"))
 app.use('/auth', require("./routes/authRoutes"))
+app.use('/donor', require("./routes/donorRoutes"))
 
 app.get('/', (req, res) => {
     res.send('Hello, world!');
