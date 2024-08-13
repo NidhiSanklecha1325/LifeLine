@@ -1,20 +1,45 @@
-import React from 'react'
-import NavBarComponent from './Nav'
-import Footer from './Footer'
+import React from 'react';
+import NavBarComponent from './Nav';
+import Footer from './Footer';
 import '../../pages/styles.css';
+import SidebarMenu from './Sidebar';
 
-const Layout = ({children}) => {
+const Layout = ({ children }) => {
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <>
-      <div className='header'><NavBarComponent /></div>
-
-      <div className='content'>
-       
-        {children}</div>
-
-        <div className='footer'><Footer/></div>
+      <div className='header'>
+        <NavBarComponent />
+      </div>  
+      <div className='main-content'>
+        {
+          user ? (
+            <div className='content row'>
+              <div className='col-lg-3' style={{width: "20% !important"}}>
+                <SidebarMenu />
+              </div>
+              <div className='col-lg-9'>
+                {children}
+              </div>
+            </div>
+          ) : (
+            <div className='content'>
+              {children}
+            </div>
+          )
+        }
+      </div>
+      {
+          user ? (
+          <></>
+                    ) : (
+          <div className='footer'>
+                  <Footer />
+                </div>
+                    )
+                  }
     </>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

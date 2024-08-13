@@ -1,16 +1,24 @@
 import React, { useEffect } from 'react'
 import Layout from '../../components/shared/Layout'
-import { Button, Form, FormControl, FormGroup,Dropdown, ButtonGroup,Row,Col, InputGroup, ButtonToolbar,Stack, Card } from 'react-bootstrap';
+import { Button, Form, FormControl, FormGroup,Dropdown, ButtonGroup,Row,Col, InputGroup, ButtonToolbar,Stack, Card ,ListGroup, CardGroup} from 'react-bootstrap';
 import { useState } from 'react';
 import MultiStepProgressBar from '../../components/shared/MultiStepProgressBar';
 import API from '../../services/API';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import DatePicker from 'react-datepicker';
+import { useSelector } from 'react-redux';
+import "../styles.css"
+import './BookAppointment.css';
+import AsyncSelect from 'react-select/async'
 
 
 const BookAppointment = () => {
   const [page, setPage] = useState("locationsearch");
-  const [location,setLocation] = useState('')
+  const user =  JSON.parse(localStorage.getItem("user"))
+  const [location,setLocation] = useState([])
+  const [appointmentDate, setAppointmentDate] = useState("");
+  const [appointmentTime, setAppointmentTime] = useState("");
+  const [bloodGroup,setBloodGroup] = useState("")
+  const [bloodUnit,setBloodUnit] = useState()
 
   const nextPage = (page) => {
     setPage(page);
@@ -40,71 +48,41 @@ const BookAppointment = () => {
   const LocationSearch = ({onButtonClick}) => {
     const [searchResult, setSearchResult] = useState([])
     const [key,setKey] = useState("")
-    const handleDropdownSelect = (eventKey, event) => {
-      setKey(eventKey);
-      setLocation(eventKey)
+    let temp ;
+    const addLocation = () => {
+      
+      setLocation(key)
+      
     };
   
-    useEffect(() => {
-      const search = async() =>{
+    const onChange = searchResult =>{
+      setSearchResult(searchResult)
+      setKey(searchResult.value)
+    }
+    const loadOptions = async (inputText,callback) =>{
+      console.log("load")
+      
+      const res = await API.get("/donor/search-location",{params: {key:inputText,limit:5}})
+      
+     const json =  res.data.results
+     
+        callback(
+          json.map(i => ({label: i+", ON",value : i}))
+        )
+        setSearchResult(json)
         
-        try {
-          if(!key.trim()){
-            setSearchResult([])
-            return 
-          }
-          const res = await API.get("/donor/search-location",{params: {key:key,limit:5}})
-          setSearchResult(res.data.results)
-          console.log(res.data.results)
-        } catch (error) {
-          console.log(error)
-        }
-      }
-      search()
-    },[key])
-
+    }
     return(
       <div>
-        <Stack direction="horizontal" gap={3}
-        >
-          <div> 
-            
-            <Dropdown  onSelect={handleDropdownSelect} autoClose="false">
-            
-              <Dropdown.Menu className="dropdown-menu text-center" show align={"end"}>
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  onChange={(e) => setKey(e.target.value)}
-                  style={{ margin: "8px 10px", borderRadius: "5px" }}
-                />
-                {searchResult.map((location) => (
-                  <Dropdown.Item key={location} eventKey={location}>
-                    {location}, ON
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-            
-                </div>
-                <InputGroup>
-                {searchResult.map((location) => (
-                  <p>
-                    {location}, ON
-                  </p>
-                ))}
-            <Button size='sm' onClick={() => onButtonClick("donorcenter")} >Search</Button>
-            </InputGroup>
-        </Stack>
-
-        
+       
+        <AsyncSelect  value={searchResult} onChange={onChange} loadOptions={loadOptions}></AsyncSelect>
+        <Button size='sm' onClick={() => { addLocation(); onButtonClick("donorcenter");}} >Search</Button>
         </div>
     )
   }
   const DonorCenter = ({onButtonClick}) => {
     const [centerList,setCenterList] = useState([])
-    console.log(location)
-
+    
       const searchCenters = async() =>{
         try{
           if(!location.trim()){
@@ -128,7 +106,7 @@ const BookAppointment = () => {
     }, [])
 
     const onSelectingCenter = async(centerId) =>{
-      setLocation(centerId)
+      setLocation([centerId])
     }
     return(
       <div>
@@ -144,7 +122,7 @@ const BookAppointment = () => {
                {center.centerAddress}
               </Card.Text>
               <Card.Text as={Col}>
-              <Button onClick={() => {onSelectingCenter(center._id);  onButtonClick("dateandtime");}} >Next</Button>
+              <Button onClick={() => {onSelectingCenter(center);  onButtonClick("dateandtime");}} >Select</Button>
               </Card.Text>
               </Row>
               
@@ -160,30 +138,134 @@ const BookAppointment = () => {
     )
   }
   const DateAndTime = ({onButtonClick}) => {
-    const [date,setDate] = useState(new Date())
+    const bloodGroups = ["O+", "O-", "AB+", "AB-", "A+", "A-", "B+", "B-"]
+    const today = new Date()
+    today.setDate(today.getDate()+1)
+    const [selectedDate,setSelectedDate] = useState(new Date(today))
+    let minTime = new Date(today.getFullYear(),today.getMonth(),today.getDate(),10,0,0,0)
+let maxTime = new Date(today.getFullYear(),today.getMonth(),today.getDate(),15,0,0,0)
+const onChange = (date) =>{
+  console.log(date)
+  setSelectedDate(new Date(date))
+  minTime = new Date(selectedDate.getFullYear(),selectedDate.getMonth(),selectedDate.getDate(),10,0,0,0)
+   maxTime = new Date(selectedDate.getFullYear(),selectedDate.getMonth(),selectedDate.getDate(),15,0,0,0)
+}
+    const handleDateSelect = () =>{
+      
+      setAppointmentDate(new Date(selectedDate).toDateString())
+     setAppointmentTime(new Date(selectedDate).toTimeString())
+    }
+    
     return(
-      <div>DateAndTime
-        <Calendar onChange={setDate} value={date} />
-        <Button onClick={() => onButtonClick("reviewandbook")} >Next</Button>
+      <div>
+       <Row>
+       <Form.Group as={Col} controlId="formGridState">
+          <Form.Label>Blood Group</Form.Label>
+          <Form.Select defaultValue="Choose..." name="bloodGroup" value={bloodGroup} onChange={(e) => setBloodGroup(e.target.value)}>
+            <option>Choose...</option>
+            {bloodGroups.map((b)=> (
+                <option value={b}>{b}</option>
+            ))}
+            
+          </Form.Select>
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Label>Quantity (in units)</Form.Label>
+          <Form.Control type='number' name='unit' value={bloodUnit} onChange={(e) => setBloodUnit(e.target.value)}/>
+        </Form.Group>
+        </Row> 
+        <Row>
+
+          <Col lg={9}>
+          <DatePicker
+      selected={selectedDate}
+      onChange={onChange}
+      minDate={today}
+      inline
+      showTimeSelect  
+      maxTime={maxTime}
+      minTime={minTime}
+      timeIntervals={15}
+         
+    /> 
+    <Button onClick={() => {handleDateSelect(); onButtonClick("reviewandbook"); }}>Select Appointment</Button>
+          </Col>
+          
+        </Row>
+       
+      
       </div>
     )
   }
   const ReviewAndBook = ({onButtonClick}) => {
+    console.log(user)
+    const BookAppointment = async () => { 
+      
+      let userId = user._id
+      let locationId ="";
+    {location.map((center)=>(
+      locationId = center._id
+    ))}
+    try {
+      const res = await API.post("/donor/book-appointment",{userId,locationId,appointmentDate,appointmentTime,bloodGroup})
+      if(res){
+        nextPage("complete")
+      }else{
+        alert("Something went wrong. Please try again")
+        nextPage("locationsearch")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+      
+    }
     return(
-      <div>ReviewAndBook
-        <Button onClick={() => onButtonClick("complete")} >Next</Button>
+      <div><CardGroup>
+      {location.map((center)=>(
+      
+      <Card>
+        
+        <Card.Body>
+          <Card.Title>{center.centerName}</Card.Title>
+          <Row>x
+          <Card.Text as={Col}>
+           {center.centerAddress}
+          </Card.Text>
+          <Card.Text as={Col}>
+          
+          </Card.Text>
+          </Row>
+          
+        </Card.Body>
+      </Card>
+   
+   
+      ))}
+     <Card>
+      <Card.Text>
+      {appointmentDate.toString()}
+      </Card.Text>
+      <Card.Text>
+      {appointmentTime.toString().substring(0,5)}
+      </Card.Text>
+     
+     </Card>
+    </CardGroup>
+        <Button onClick={() =>{ BookAppointment()}} >Book Appointment</Button>
       </div>
     )
   }
   const CompleteBooking = ({onButtonClick}) => {
+   
     return(
-      <div>DonorCenter
-        
+      <div>
+        <h2>Appointment booked</h2>
       </div>
     )
   }
   return (
     <Layout>
+      
         <MultiStepProgressBar page={page} onPageNumberClick={nextPageNumber} />
       {
         {

@@ -30,15 +30,18 @@ dotenv.config();
 const app = express();
 const connectDB = require('./config/database');
 
+
 connectDB();
 app.use(cors())
 app.use(express.json())
 app.use(morgan('dev'))
 //app.use(express.static('public'));
 
-app.use('/test', require("./routes/testRoutes"))
+app.use('/admin', require("./routes/adminRoutes"))
 app.use('/auth', require("./routes/authRoutes"))
 app.use('/donor', require("./routes/donorRoutes"))
+app.use('/consumer',require("./routes/consumerRoutes"))
+
 
 app.get('/', (req, res) => {
     res.send('Hello, world!');

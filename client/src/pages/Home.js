@@ -1,12 +1,12 @@
 import React from 'react';
 import NavBarComponent from '../components/shared/Nav';
 import Footer from '../components/shared/Footer';
-import BannerComponent from './Banner';
+import BannerComponent from '../components/shared/Banner';
 import './styles.css'
 import { useSelector } from 'react-redux';
 import Layout from '../components/shared/Layout';
 import Spinner from '../components/shared/Spinner';
-import FlipCard from '../components/FlipCard';
+import FlipCard from '../components/shared/FlipCard';
 // Import images from the src folder
 import center1Image from '../images/centre1.jpg';
 import center2Image from '../images/centre2.jpg';
@@ -17,6 +17,7 @@ import donor1Image from '../images/donor1.png';
 import donor2Image from '../images/donor2.png';
 import donor3Image from '../images/donor3.png';
 import donor4Image from '../images/donor4.png';
+import BloodInventory from '../components/shared/BloodInventory';
 
 // Example individual data
 const individuals = [
@@ -44,40 +45,26 @@ const individuals = [
 const Home = () => {
  const {loading,error} = useSelector(state=> state.auth)
   return (
-    <Layout>
+    <>
+    
     {error && <span>{alert(error)}</span>}
     {loading ? (
       <Spinner />
     ) : (
       <>
-      
+      <div className='header'>
+        <NavBarComponent />
+      </div>
+      <div className='main-content'>
+      <div className='content'>
       <header className="bg-primary text-white text-center py-5 mb-4 custom-header">
             <div className="container">
               <h1 className="display-4">Welcome to LifeLine</h1>
               <p className="lead">Find nearby donor centers and filter by blood type availability</p>
             </div>
           </header>
-      <div className="container mt-5 search-filter-section">
-        <div className="form-group">
-          <label htmlFor="location">Search Nearby Donor Centers</label>
-          <input type="text" className="form-control" id="location" placeholder="Enter your location" />
-        </div>
-        <div className="form-group">
-          <label htmlFor="bloodType">Filter by Blood Type Availability</label>
-          <select className="form-control" id="bloodType">
-            <option>All</option>
-            <option>A+</option>
-            <option>A-</option>
-            <option>B+</option>
-            <option>B-</option>
-            <option>AB+</option>
-            <option>AB-</option>
-            <option>O+</option>
-            <option>O-</option>
-          </select>
-          <button className="btn btn-danger btn-lg btn-block mt-3">Search</button>
-        </div>
-      </div>
+          
+      
 
       {/* New section for flip cards */}
       <section className="individuals-section py-5">
@@ -96,38 +83,16 @@ const Home = () => {
               </div>
             </div>
           </section>
-
           <section className="ways-to-donate-section py-5">
-            <div className="container">
-              <h2 className="text-center mb-4">Ways to Donate</h2>
-              <p className="text-center mb-4">
-                Your support makes a significant impact. Here are several ways you can contribute to our cause:
+          <div className="container">
+          <h2 className="text-center mb-4">Blood Inventory</h2>
+          <p className="text-center mb-4">
+          We manage the national supply of blood products for all the provinces and territories. Many variables can impact our inventory such as weather, holidays or tragic events. Below is an overview of our inventory levels across all blood types.
               </p>
-              <div className="text-center mb-4">
-                <a href="#" className="btn btn-danger btn-lg">View All Ways to Donate</a>
-              </div>
-              <div className="row text-center">
-                <div className="col-md-4 mb-3">
-                  <a href="#financial-donations" className="btn btn-outline-primary btn-block">Financial Donations</a>
-                </div>
-                <div className="col-md-4 mb-3">
-                  <a href="#donate-as-partner" className="btn btn-outline-primary btn-block">Donate as a Partner</a>
-                </div>
-                <div className="col-md-4 mb-3">
-                  <a href="#volunteering" className="btn btn-outline-primary btn-block">Volunteering</a>
-                </div>
-              </div>
-              <div className="text-center mt-4">
-                <a href="#recognition-program" className="btn btn-outline-secondary">Information on Recognition Program</a>
-              </div>
+            <BloodInventory/>
             </div>
-            {/* Blood droplet animations */}
-            <div className="blood-droplet"></div>
-            <div className="blood-droplet"></div>
-            <div className="blood-droplet"></div>
-            <div className="blood-droplet"></div>
-            <div className="blood-droplet"></div>
-          </section>
+            </section>
+          
 
 
           <section className="management-centers-section py-5">
@@ -217,11 +182,47 @@ const Home = () => {
               </div>
             </div>
           </section>
+          <section className="ways-to-donate-section py-5">
+            <div className="container">
+              <h2 className="text-center mb-4">Ways to Donate</h2>
+              <p className="text-center mb-4">
+                Your support makes a significant impact. Here are several ways you can contribute to our cause:
+              </p>
+              <div className="text-center mb-4">
+                <a href="#" className="btn btn-danger btn-lg">View All Ways to Donate</a>
+              </div>
+              <div className="row text-center">
+                <div className="col-md-4 mb-3">
+                  <a href="#financial-donations" className="btn btn-outline-primary btn-block">Financial Donations</a>
+                </div>
+                <div className="col-md-4 mb-3">
+                  <a href="#donate-as-partner" className="btn btn-outline-primary btn-block">Donate as a Partner</a>
+                </div>
+                <div className="col-md-4 mb-3">
+                  <a href="#volunteering" className="btn btn-outline-primary btn-block">Volunteering</a>
+                </div>
+              </div>
+              <div className="text-center mt-4">
+                <a href="#recognition-program" className="btn btn-outline-secondary">Information on Recognition Program</a>
+              </div>
+            </div>
+            {/* Blood droplet animations */}
+            <div className="blood-droplet"></div>
+            <div className="blood-droplet"></div>
+            <div className="blood-droplet"></div>
+            <div className="blood-droplet"></div>
+            <div className="blood-droplet"></div>
+          </section>
       <BannerComponent />
+        </div>
+      </div>
+      <div className='footer'>
+                  <Footer />
+                </div>
       
     </>
     )}
-    </Layout>
+    </>
   );
 };
 

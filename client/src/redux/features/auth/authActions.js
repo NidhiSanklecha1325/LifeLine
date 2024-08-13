@@ -9,10 +9,11 @@ export const userLogin = createAsyncThunk(
       //store token
       
       if (data.success) {
-        alert(data.message);
-        console.log(data)
+        
+        console.log(data.user)
         localStorage.setItem("token", data.token);
-        localStorage.setItem("user",data.user.firstName)
+        localStorage.setItem("user",JSON.stringify(data.user))
+
         window.location.assign("/dashboard");
         
       }
@@ -55,8 +56,7 @@ export const userRegister = createAsyncThunk(
             phoneNumber
         });
         if (data?.success) {
-          alert("User Registerd Successfully");
-         window.location.replace("/");
+          window.location.replace("/login")
          // toast.success("User Registerd Successfully");
         }
       } catch (error) {

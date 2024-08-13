@@ -1,17 +1,69 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import Layout from '../components/shared/Layout';
-import { Link } from 'react-router-dom';
+import { Card, Row, Col } from 'react-bootstrap';
+import API from '../services/API';
+import './Dashboard.css'; // Create this CSS file for styling
 
 const Dashboard = () => {
-  return (
-    <Layout>
-      <Link to="/book-appointment" >Book Appointment</Link> <br/>
-      <Link to={""}>Appointments</Link><br/>
-      <Link to={"/profile"}>Profile</Link><br/>
-      <Link to={""}>Donor Stats</Link><br/>
-      <Link to={""}>Donation History</Link><br/>
-    </Layout>
-  )
-}
+    const [metrics, setMetrics] = useState({
+        totalDonors: 0,
+        totalAppointments: 0,
+        recentActivities: []
+    });
+
+    /* useEffect(() => {
+        const fetchMetrics = async () => {
+            try {
+                const response = await API.get('/dashboard/metrics'); // Adjust the endpoint based on your API
+                setMetrics(response.data);
+            } catch (error) {
+                console.error('Error fetching dashboard metrics', error);
+            }
+        };
+        fetchMetrics();
+    }, []); */
+
+    return (
+        <Layout>
+            <div className="dashboard-container">
+                <h2>Dashboard</h2>
+                <Row className="mb-4">
+                    <Col md={4}>
+                        <Card className="metric-card">
+                            <Card.Body>
+                                <Card.Title>Total Donors</Card.Title>
+                                <Card.Text className="metric-value">{metrics.totalDonors}</Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col md={4}>
+                        <Card className="metric-card">
+                            <Card.Body>
+                                <Card.Title>Total Appointments</Card.Title>
+                                <Card.Text className="metric-value">{metrics.totalAppointments}</Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col md={4}>
+                        <Card className="metric-card">
+                            <Card.Body>
+                                <Card.Title>Recent Activities</Card.Title>
+                                <ul className="activity-list">
+                                    {metrics.recentActivities.length > 0 ? (
+                                        metrics.recentActivities.map((activity, index) => (
+                                            <li key={index}>{activity}</li>
+                                        ))
+                                    ) : (
+                                        <li>No recent activities</li>
+                                    )}
+                                </ul>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </div>
+        </Layout>
+    );
+};
 
 export default Dashboard;

@@ -24,7 +24,8 @@
     "mongoose": "^8.4.1",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.0",
-    "react-router-dom": "^6.24.0"
+    "react-router-dom": "^6.24.0",
+    "stripe": "^16.7.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.5",

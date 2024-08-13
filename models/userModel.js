@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
     role:{
         type: String,
         required:[true,"Required"],
-        enum:['donor', 'receiver']
+        enum:['donor', 'receiver','admin']
     }
 }, {timestamps : true})
 

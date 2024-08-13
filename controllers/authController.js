@@ -38,6 +38,24 @@ const registerController = async (req,res) =>{
 //login call back
 const loginController = async (req, res) => {
     try {
+      /* if(req.body.role === "admin"){
+        if(req.body.email === "admin@lifeline.co.in" && req.body.password === "admin"){
+          const user = [{
+            "role" : "admin", "firstName" : "Admin", "lastName" : "", "_id" : "admin001"
+          }]
+          const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+            expiresIn: "1d",
+          });
+          return res.status(200).send({
+            success: true,
+            message: "Login Successfully",
+            token,
+            user,
+          })
+        }
+      }else{ }*/
+
+      
       const user = await userModel.findOne({ email: req.body.email });
       if (!user) {
         return res.status(404).send({
@@ -73,6 +91,7 @@ const loginController = async (req, res) => {
         token,
         user,
       });
+    
     } catch (error) {
       console.log(error);
       res.status(500).send({
