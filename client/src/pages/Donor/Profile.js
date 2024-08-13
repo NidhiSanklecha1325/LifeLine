@@ -7,6 +7,8 @@ import Form from 'react-bootstrap/Form';
 import { useSelector } from 'react-redux';
 import API from '../../services/API';
 import './Profile.css';
+
+import { Toast ,ToastContainer} from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 
 const Profile = () => {
@@ -15,6 +17,8 @@ const Profile = () => {
     const [currentPassword, setCurrentPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
+    const [show, setShow] = useState(false);
+    const [message,setMessage] = useState("")
 
     const changePassword = async (e, email) => {
         setEmail(user.email);
@@ -24,7 +28,8 @@ const Profile = () => {
             const { data } = await API.post("/donor/change-password", { email, currentPassword, newPassword });
             console.log(data);
             if (data?.success) {
-                alert(data?.message);
+                setShow(true)
+                setMessage(data.message)
             }
         } catch (error) {
             console.log(error);
@@ -33,10 +38,19 @@ const Profile = () => {
 
     return (
         <Layout>
-            
+            <ToastContainer
+          className="p-3"
+          position={'top-center'}
+          style={{ zIndex: 100 }}
+        >
+        <Toast bg='danger' onClose={() => setShow(false)} show={show} delay={10000} autohide animation>
+          
+          <Toast.Body className='text-white p-4'>{message}</Toast.Body>
+        </Toast>
+        </ToastContainer>
             <Tab.Container id="fill-tab-example" defaultActiveKey="myProfile" fill justify className="mb-3">
-                <Row>
-                    <Nav variant="pills" className="profile-nav mt-3">
+                <Row className='text-center'>
+                    <Nav variant="pills" className="profile-nav mt-3 justify-content-center">
                         <Nav.Item>
                             <Nav.Link eventKey="myProfile">My profile</Nav.Link>
                         </Nav.Item>
@@ -49,9 +63,7 @@ const Profile = () => {
                         <Nav.Item>
                             <Nav.Link eventKey="removeAccount">Remove Online Account</Nav.Link>
                         </Nav.Item>
-                        <Nav.Item>
-                            <Nav.Link eventKey="eligibilityQuiz">Eligibility Quiz</Nav.Link>
-                        </Nav.Item>
+                       
                     </Nav>
                 </Row>
                 <Row>

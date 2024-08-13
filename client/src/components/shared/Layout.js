@@ -19,7 +19,10 @@ const Layout = ({ children }) => {
                 <SidebarMenu />
               </div>
               <div className='col-lg-9'>
+                <div className='container mt-5'>
+
                 {children}
+                </div>
               </div>
             </div>
           ) : (

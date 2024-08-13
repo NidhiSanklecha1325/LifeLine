@@ -1,5 +1,8 @@
 /* MultiStepProgressBar */
-.indexedStep {
+.section-progress-bar{
+    padding: 1.5rem !important;
+    background: linear-gradient(to right, #d62027, #ff7e5f);
+}.indexedStep {
     color: rgb(190, 190, 190);
     width: 40px;
     height: 40px;
@@ -13,6 +16,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    z-index: 9;
     transition: background-color 0.3s, border-color 0.3s;
 }
 
@@ -22,8 +26,8 @@
 }
 
 .indexedStep.accomplished {
-    background-color: #e85313;
-    color: white;
+    background-color: white;
+    color: #c82333;
     border-style: none;
 }
 

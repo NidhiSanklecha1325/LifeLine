@@ -8,6 +8,7 @@ import DatePicker from 'react-datepicker';
 import { useSelector } from 'react-redux';
 import "../styles.css"
 import './BookAppointment.css';
+import './Profile.css';
 import AsyncSelect from 'react-select/async'
 
 
@@ -73,10 +74,10 @@ const BookAppointment = () => {
         
     }
     return(
-      <div>
+      <div className=''>
        
-        <AsyncSelect  value={searchResult} onChange={onChange} loadOptions={loadOptions}></AsyncSelect>
-        <Button size='sm' onClick={() => { addLocation(); onButtonClick("donorcenter");}} >Search</Button>
+        <AsyncSelect  value={searchResult} onChange={onChange} loadOptions={loadOptions} className='pt-5'></AsyncSelect>
+        <Button size='lg' onClick={() => { addLocation(); onButtonClick("donorcenter");}} className='btn btn-danger m-3 float-end'>Search</Button>
         </div>
     )
   }
@@ -109,20 +110,21 @@ const BookAppointment = () => {
       setLocation([centerId])
     }
     return(
-      <div>
+      <div className='pt-5'>
         <Row xs={1} md={2} className="g-4">
           {centerList.map((center)=>(
             <Col >
           <Card>
             
             <Card.Body>
-              <Card.Title>{center.centerName}</Card.Title>
+              
               <Row>
-              <Card.Text as={Col}>
+              <Card.Text as={Col} xs={9}>
+              <Card.Title>{center.centerName}</Card.Title>
                {center.centerAddress}
               </Card.Text>
-              <Card.Text as={Col}>
-              <Button onClick={() => {onSelectingCenter(center);  onButtonClick("dateandtime");}} >Select</Button>
+              <Card.Text as={Col} className='align-middle'>
+              <Button onClick={() => {onSelectingCenter(center);  onButtonClick("dateandtime");}} className='btn btn-danger btn-md'>Select</Button>
               </Card.Text>
               </Row>
               
@@ -158,8 +160,9 @@ const onChange = (date) =>{
     
     return(
       <div>
-       <Row>
-       <Form.Group as={Col} controlId="formGridState">
+       <Row className='mt-4'>
+        
+       <Form.Group as={Col} controlId="formGridState"  >
           <Form.Label>Blood Group</Form.Label>
           <Form.Select defaultValue="Choose..." name="bloodGroup" value={bloodGroup} onChange={(e) => setBloodGroup(e.target.value)}>
             <option>Choose...</option>
@@ -169,15 +172,16 @@ const onChange = (date) =>{
             
           </Form.Select>
         </Form.Group>
-        <Form.Group as={Col}>
+        <Form.Group as={Col}  >
           <Form.Label>Quantity (in units)</Form.Label>
           <Form.Control type='number' name='unit' value={bloodUnit} onChange={(e) => setBloodUnit(e.target.value)}/>
         </Form.Group>
         </Row> 
-        <Row>
+        <Row className='text-center'>
 
-          <Col lg={9}>
-          <DatePicker
+          <Col lg={11} className='mt-4'>
+
+          <DatePicker 
       selected={selectedDate}
       onChange={onChange}
       minDate={today}
@@ -188,7 +192,7 @@ const onChange = (date) =>{
       timeIntervals={15}
          
     /> 
-    <Button onClick={() => {handleDateSelect(); onButtonClick("reviewandbook"); }}>Select Appointment</Button>
+    <Button onClick={() => {handleDateSelect(); onButtonClick("reviewandbook"); }} className='btn btn-danger btn-lg m-3'>Select Appointment</Button>
           </Col>
           
         </Row>

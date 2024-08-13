@@ -49,3 +49,6 @@
     border-color: #bd2130;
   }
   
+  .bg-light{
+    background :linear-gradient(to bottom right, #fff, #f8d7da) !important
+  }
