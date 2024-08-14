@@ -1,5 +1,5 @@
 const express = require('express')
-const {changePasswordController, searchLocationController, searchCenterController, bookAppointmentController, appointmentListController, deleteAppointmentController} = require('../controllers/donorController')
+const {changePasswordController, searchLocationController, searchCenterController, bookAppointmentController, appointmentListController, deleteAppointmentController, getDonationListController} = require('../controllers/donorController')
 
 const router = express.Router()
 
@@ -8,6 +8,7 @@ router.get('/search-location',searchLocationController)
 router.get('/search-center',searchCenterController)
 router.post('/book-appointment',bookAppointmentController)
 router.get('/get-appointment-list',appointmentListController)
+router.get('/get-donation-list',getDonationListController)
 router.delete('/delete-appointment',deleteAppointmentController)
 
 module.exports = router;

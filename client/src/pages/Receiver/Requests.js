@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from 'react'
 import Layout from '../../components/shared/Layout'
 import API from '../../services/API'
-import { Table,Modal,Button,Form,Row,Col,Toast,ToastContainer } from 'react-bootstrap'
-import ToastBox from '../../components/shared/Toast'
+import { Table,Modal,Button,Form,Row,Col,Toast,ToastContainer, ButtonGroup, ButtonToolbar } from 'react-bootstrap'
+import './Requests.css'
 
 const Requests = () => {
     const user =  JSON.parse(localStorage.getItem("user"))
@@ -62,14 +62,12 @@ const bloodGroups = ["O+", "O-", "AB+", "AB-", "A+", "A-", "B+", "B-"]
           position={'top-center'}
           style={{ zIndex: 100 }}
         >
-        <Toast bg='danger' onClose={() => setShowMessage(false)} show={showMessage} delay={10000} autohide animation>
+        <Toast bg='danger' onClose={() => setShowMessage(false)} show={showMessage} delay={5000} autohide animation>
           
           <Toast.Body className='text-white p-4'>{message}</Toast.Body>
         </Toast>
         </ToastContainer>
-      <Button variant="primary" onClick={handleShow}>
-        New Request
-      </Button>
+      
 
       <Modal size="lg"
         show={show}
@@ -77,7 +75,7 @@ const bloodGroups = ["O+", "O-", "AB+", "AB-", "A+", "A-", "B+", "B-"]
         backdrop="static"
         keyboard={false}
       >
-        <Form onSubmit={sendRequest} >
+        <Form onSubmit={sendRequest} className='request-form'>
         <Modal.Header closeButton>
           <Modal.Title>New Request</Modal.Title>
         </Modal.Header>
@@ -98,12 +96,12 @@ const bloodGroups = ["O+", "O-", "AB+", "AB-", "A+", "A-", "B+", "B-"]
     
       <Form.Group as={Col} controlId="formGridCity">
         <Form.Label>Phone Number</Form.Label>
-        <Form.Control type='number' name={phoneNumber} value={user.phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}/>
+        <Form.Control type='number' required name={phoneNumber} value={user.phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}/>
       </Form.Group>
       <Form.Group as={Col} controlId="formGridState">
           <Form.Label>Gender</Form.Label>
-          <Form.Select defaultValue="Choose..." name={gender} onChange={(e) => setGender(e.target.value)}>
-            <option>Choose...</option>
+          <Form.Select required name={gender} onChange={(e) => setGender(e.target.value)}>
+            
             <option value={"Male"}>Male</option>
             <option value={"Female"}>Female</option>
             <option value={"Null"}>Prefer Not To Say</option>
@@ -117,8 +115,8 @@ const bloodGroups = ["O+", "O-", "AB+", "AB-", "A+", "A-", "B+", "B-"]
 
         <Form.Group as={Col} controlId="formGridState">
           <Form.Label>Blood Group</Form.Label>
-          <Form.Select defaultValue="Choose..." name={bloodGroup} onChange={(e) => setBloodGroup(e.target.value)}>
-            <option>Choose...</option>
+          <Form.Select  required name={bloodGroup} onChange={(e) => setBloodGroup(e.target.value)}>
+           
             {bloodGroups.map((b)=> (
                 <option value={b}>{b}</option>
             ))}
@@ -127,7 +125,7 @@ const bloodGroups = ["O+", "O-", "AB+", "AB-", "A+", "A-", "B+", "B-"]
         </Form.Group>
         <Form.Group as={Col} controlId="formGridCity">
         <Form.Label>Quantity (in units)</Form.Label>
-        <Form.Control type='text' name={unit} onChange={(e) => setUnit(e.target.value)}/>
+        <Form.Control type='text' name={unit} required onChange={(e) => setUnit(e.target.value)}/>
       </Form.Group>
        
       </Row>
@@ -137,17 +135,35 @@ const bloodGroups = ["O+", "O-", "AB+", "AB-", "A+", "A-", "B+", "B-"]
       
     
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+        <Modal.Footer >
+          <ButtonToolbar>
+            <ButtonGroup>
+            <Button variant="light" className='me-4' size='lg' onClick={handleClose} >
             Close
           </Button>
-          <Button variant="primary" type="submit">
+            </ButtonGroup>
+            <ButtonGroup>
+            <Button variant="danger" size='lg' type="submit">
         Submit
       </Button>
+            </ButtonGroup>
+          
+          
+          </ButtonToolbar>
+          
         </Modal.Footer>
         </Form>
       </Modal>
-      <Table striped bordered hover>
+      <div class=" pt-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h2 class="mb-0">Requests</h2>
+                        <Button variant="danger" onClick={handleShow} size='lg'>
+        New Request
+      </Button>
+                    </div>
+                    <div class="table-responsive">
+             <Table hover className='text-start align-middle'>
              <thead>
                <tr>
                  <th>#</th>
@@ -166,12 +182,20 @@ const bloodGroups = ["O+", "O-", "AB+", "AB-", "A+", "A-", "B+", "B-"]
                  <td>{request.bloodGroup}</td>
                  <td>{request.unit || 1}</td>
                  <td>{request.status}</td>
-                 <td><Button onClick={() => cancelRequest(request._id)}>Cancel Request</Button></td>
+                 <td>{request.status === "approved" ? (
+                  <></>
+                 ) : (
+                    <Button variant='danger' onClick={() => cancelRequest(request._id)}>Cancel Request</Button>
+                 )}
+                  </td>
                </tr>
               
              </tbody>
              ))}
            </Table>
+           </div>
+                </div>
+            </div>
     </Layout>
   )
 }

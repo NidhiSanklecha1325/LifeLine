@@ -26,7 +26,8 @@ const appointmentSchema = new mongoose.Schema({
         type: String
     },
     unit:{
-        type: Number
+        type: Number,
+        default: 1
     },
     phoneNumber:{
         type: Number

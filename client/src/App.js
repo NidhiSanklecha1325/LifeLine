@@ -8,7 +8,6 @@ import ProtectedRoutes from './components/routes/ProtectedRoutes.js';
 import AddDonorCenters from './pages/AddDonorCenters.js';
 import BookAppointment from './pages/Donor/BookAppointment.js';
 import Profile from './pages/Donor/Profile.js';
-import DonorStats from './pages/Donor/DonorStats.js';
 import Appointments from './pages/Donor/Appointments.js';
 import RequestBlood from './pages/Receiver/RequestBlood.js';
 import Requests from './pages/Receiver/Requests.js';
@@ -17,6 +16,7 @@ import DonationRequests from './pages/Admin/DonationRequests.js';
 import BloodRequests from './pages/Admin/BloodRequests.js';
 import Donation from './pages/Donation.js';
 import SuccessPage from './pages/SuccessPage.js';
+import DonationHistory from './pages/Donor/DonationHistory.js';
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
         <Route path="/book-appointment" element={<BookAppointment />} />
         <Route path="/appointments" element={<Appointments />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/donor-stats" element={<DonorStats />} />
+        <Route path="/donation-history" element={<DonationHistory />} />
         <Route path="/request-blood" element={<RequestBlood />} />
         <Route path="/requests" element={<Requests />} />
         <Route path="/login" element={<Login />} />

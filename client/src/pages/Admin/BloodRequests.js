@@ -41,7 +41,16 @@ const approve = async(id,bloodGroup,unit) =>{
           <Toast.Body className='text-white p-4'>{message}</Toast.Body>
         </Toast>
         </ToastContainer>
-        <Table striped bordered hover>
+        <div class=" pt-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h2 class="mb-0">Donations</h2>
+                        
+                    </div>
+                    <div class="table-responsive">
+
+                    
+        <Table className='text-start align-middle' hover>
              <thead>
                <tr>
                  <th>#</th>
@@ -52,6 +61,8 @@ const approve = async(id,bloodGroup,unit) =>{
                  <th>Action</th>
                </tr>
              </thead>
+             {bloodRequestList.length > 0 ? ( 
+              <>
              {bloodRequestList.map((request,index)=>(
              <tbody>
                <tr>
@@ -69,7 +80,18 @@ const approve = async(id,bloodGroup,unit) =>{
               
              </tbody>
              ))}
+             </>
+             ) : (
+<tbody>
+              <tr>
+              <td colSpan={6}><h3>No blood requests.</h3></td>
+              </tr>
+            </tbody>
+             )}
            </Table>
+           </div>
+                </div>
+            </div>
     </Layout>
   )
 }

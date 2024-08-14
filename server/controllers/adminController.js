@@ -1,6 +1,7 @@
 const { model } = require("mongoose");
 const appointmentModel = require("../models/appointmentModel");
 const stockModel = require("../models/stockModel");
+const userModel = require("../models/userModel")
 
 const getDonationRequestListController = async(req,res) =>{
     console.log("donation requests")
@@ -60,6 +61,26 @@ const getBloodRequestListController = async(req,res) =>{
     
 }
 
+const getAppointmentListController = async(req,res) =>{
+    
+    try {
+        const request = await appointmentModel.find({
+             status : "approved"
+        }).populate("userId").sort({"createdAt": -1})
+        const donors = await userModel.find({"role": "donor"})
+        const consumers = await userModel.find({"role": "receiver"})
+        
+        console.log(donors)
+        return res.status(200).send({
+            success: true,
+            request, donors,consumers
+        })
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
+
 const addToStocksController = async(req,res) =>{
     console.log(req.body)
     try{
@@ -76,16 +97,30 @@ const addToStocksController = async(req,res) =>{
         console.log(error)
     }
 }
+const rejectRequestController = async(req,res) =>{
+try {
+    const result = await appointmentModel.findOneAndUpdate({_id:req.body.id},{status: "rejected"})
+
+            return res.status(201).send({   
+                success: true,
+                message: "Donation of "+ result.bloodGroup+ " is rejected.",
+               
+              });
+} catch (error) {
+    console.log(error)
+}
+}
 const deleteFromStocksController = async(req,res) =>{
     console.log(req.body)
     try{
         const result = await stockModel.findOneAndUpdate({bloodGroup: req.body.bloodGroup},{ $inc : {unit: -req.body.unit}})
         if(result){
-            await appointmentModel.findOneAndUpdate({_id:req.body.id},{status: "approved"})
+           const a = await appointmentModel.findOneAndUpdate({_id:req.body.id},{status: "approved" , appointmentDate: new Date().toDateString()})
+           console.log(a)
             return res.status(201).send({   
                 success: true,
                 message: "Blood Request Approved",
-               
+                 
               });
         }
     }catch(error){
@@ -97,7 +132,7 @@ const getInventoryContoller = async(req,res) =>{
     try {
         const result = await stockModel.find()
         
-        console.log(currentResult)
+        
         return res.status(201).send({   
             success: true,
             result
@@ -139,4 +174,5 @@ const donationController = async(req,res)=>{
     })
         
 }
-module.exports = {getDonationRequestListController,addToStocksController,getInventoryContoller,getBloodRequestListController,deleteFromStocksController,donationController,getInventoryForHomeContoller}
+module.exports = {getDonationRequestListController,getAppointmentListController,addToStocksController,getInventoryContoller,
+    rejectRequestController,getBloodRequestListController,deleteFromStocksController,donationController,getInventoryForHomeContoller}

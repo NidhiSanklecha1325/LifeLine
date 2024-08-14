@@ -20,6 +20,16 @@ const DonationRequests = () => {
         getDonationRequestList()
 },[])
 
+const rejectRequest = async(id) =>{
+  const res = await API.post("/admin/reject-request",{id})
+  console.log(res)
+  if(res.data.success){
+
+      setShow(true)
+      setMessage(res.data.message)
+      getDonationRequestList()
+  }
+}
 const approve = async(id,bloodGroup,unit) =>{
     const res = await API.post("/admin/add-to-stocks",{id,bloodGroup,unit})
     if(res.data.success){
@@ -41,9 +51,14 @@ const approve = async(id,bloodGroup,unit) =>{
           <Toast.Body className='text-white p-4'>{message}</Toast.Body>
         </Toast>
         </ToastContainer>
-        {donationRequestList.length > 0 ? (
-            <>
-        <Table striped bordered hover>
+        <div class=" pt-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h2 class="mb-0">Donations</h2>
+                        
+                    </div>
+                    <div class="table-responsive">
+        <Table hover className='text-start align-middle'>
              <thead>
                <tr>
                  <th>#</th>
@@ -54,6 +69,9 @@ const approve = async(id,bloodGroup,unit) =>{
                  <th>Action</th>
                </tr>
              </thead>
+        {donationRequestList.length > 0 ? (
+            <>
+            
              {donationRequestList.map((donationRequest,index)=>(
              <tbody>
                <tr>
@@ -66,45 +84,73 @@ const approve = async(id,bloodGroup,unit) =>{
                     {
                         
                     }
-                    <Button onClick={() => approve(donationRequest._id,donationRequest.bloodGroup,2)}>Approve</Button><Button>Reject</Button></td>
+                    <Button variant='outline-danger me-2' onClick={() => approve(donationRequest._id,donationRequest.bloodGroup,2)}>Approve</Button>
+                    <Button variant='danger' onClick={() => rejectRequest(donationRequest._id)}>Reject</Button></td>
                </tr>
               
              </tbody>
              ))}
-           </Table>
+          
            </>
           ) : (
-            <p>No donations</p>
+            <td colSpan={6}><h3>No upcoming donations.</h3></td>
            )}
-           {upcomingDonationList.length > 0 && (
-            <>
-            <h2>Upcoming Donations</h2>
-           <Table striped bordered hover>
+            </Table>
+           </div>
+                </div>
+            </div>
+            <div class=" pt-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h2 class="mb-0">Upcoming Donations</h2>
+                        
+                    </div>
+                    <div class="table-responsive">
+        <Table hover className='text-start align-middle'>
              <thead>
                <tr>
                  <th>#</th>
-                 
-                 <th>Appointment Date</th>
-                 <th>Appointment Time</th>
+                 <th>Donated Date</th>
+                 <th>Donor Name</th>
+                 <th>Blood Group</th>
+                  <th>Quantity</th>
                  <th>Action</th>
                </tr>
              </thead>
+        {upcomingDonationList.length > 0 ? (
+            <>
+            
              {upcomingDonationList.map((donationRequest,index)=>(
              <tbody>
                <tr>
                  <td>{index+1}</td>
-                 
                  <td>{donationRequest.appointmentDate}</td>
-                 <td>{(donationRequest.appointmentTime).toString().substring(0,5)}</td>
+                 <td>{donationRequest.userId.firstName} {donationRequest.userId.lastName}</td>
+                <td>{donationRequest.bloodGroup}</td>
+                 <td>{donationRequest.unit || 1}</td>
                  <td>
-                    No action needed</td>
+                    {
+                        
+                    }
+                    <Button className='btn btn-success' onClick={() => approve(donationRequest._id,donationRequest.bloodGroup,2)}>Approve</Button><Button>Reject</Button></td>
                </tr>
               
              </tbody>
              ))}
-           </Table>
+          
            </>
+          ) : (
+            <tbody>
+              <tr>
+              <td colSpan={6}><h3>No upcoming donations.</h3></td>
+              </tr>
+            </tbody>
+            
            )}
+            </Table>
+           </div>
+                </div>
+            </div>
              
       
     </Layout>

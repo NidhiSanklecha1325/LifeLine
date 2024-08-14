@@ -1,25 +1,43 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { Link } from 'react-router-dom';
 import '../../pages/styles.css';
 import Logo from '../../lifeline_logo.png';
 //import Logo from '../../images/logo_temp.png'
-import { Nav, Navbar, Button, Container } from 'react-bootstrap';
+import { Nav, Navbar, Button, Container,Toast ,ToastContainer } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 const NavBarComponent = () => {
   var userDetail = JSON.parse(localStorage.getItem("user"));
+  const [show, setShow] = useState(false);
+    const [message,setMessage] = useState("")
 
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.clear();
-    alert('Logout Successfully');
-    navigate('/');
+    
+    setShow(true)
+      setMessage("You are logged out.")
+      setTimeout(() => {
+        navigate('/');
+      },1000
+      )
   }
   const handleLogin = () => {
     navigate('/login');
   }
 
   return (
+    <>
+    <ToastContainer
+          className="p-3"
+          position={'top-center'}
+          style={{ zIndex: 100 }}
+        >
+        <Toast bg='danger' onClose={() => setShow(false)} show={show} delay={1000} autohide animation>
+          
+          <Toast.Body className='text-white p-4'>{message}</Toast.Body>
+        </Toast>
+        </ToastContainer>
     <Navbar expand="lg" className="navbar-custom">
       <Container className="container-custom">
         <Navbar.Brand as={Link} to="/" className="logo-container">
@@ -39,6 +57,7 @@ const NavBarComponent = () => {
         </div>
       </Container>
     </Navbar>
+    </>
   );
 }
 

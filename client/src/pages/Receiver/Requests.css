@@ -1,0 +1,11 @@
+.modal-content{
+    background: linear-gradient(to bottom right, #fff, #f8d7da) !important;
+}
+.request-form{
+    max-width: 90% !important;
+    margin: 50px 30px !important;
+}
+.form-label {
+    font-weight: bold;
+    color: #343a40;
+}

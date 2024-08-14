@@ -10,11 +10,7 @@ const SidebarMenu = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     const [collapsed, setCollapsed] = useState(false);
   
-    const donorMenu = [{
-        name: "Dashboard",
-        link: "/dashboard",
-        icon: faHome
-    },
+    const donorMenu = [
     {
         name: "Book Appointments",
         link: "/book-appointment",
@@ -31,23 +27,14 @@ const SidebarMenu = () => {
         icon: faUser
     },
     {
-        name: "Donor Stats",
-        link: "/donor-stats",
-        icon: faHeartPulse
-    },
-    {
         name: "Donation History",
-        link: "",
+        link: "/donation-history",
         icon: faHandHoldingDroplet
-    }
+    },
+    
     ];
     const receiverMenu = [
-        {
-            name: "Dashboard",
-            link: "",
-            icon: faHome
-        },
-
+       
         {
             name: "Request List",
             link: "/requests",
@@ -62,7 +49,7 @@ const SidebarMenu = () => {
     const adminMenu = [
         {
             name: "Dashboard",
-            link:"",
+            link:"/dashboard",
             icon:  faBookMedical
         },
         {
@@ -86,21 +73,21 @@ const SidebarMenu = () => {
         setCollapsed(!collapsed);
     };
     return (
-        <div style={{ display: "flex" }}>
-            <Sidebar className="sidebar" collapsed={collapsed}>
+        <div style={{ width: "100%", height: "100%" }}>
+            <Sidebar className="sidebar" collapsed={collapsed} style={{height: "100%"}}>
                 <div className="sidebar-header">
-                    <MdMenu className="hamburger" onClick={handleClick} />
-                    <h2 style={{ color: '#fff', margin: 0, textAlign: 'center' }}>Menu</h2>
+                    <MdMenu className="hamburger" onClick={handleClick} >Menu </MdMenu>
+                    <h2>Menu</h2>
                 </div>
                 <Menu>
                     {
                         user.role === "donor" && (
                             donorMenu.map((menu) => (
-                                <MenuItem
+                                <MenuItem className='mt-3 mb-3  '
                                     key={menu.name}
-                                    icon={<FontAwesomeIcon icon={menu.icon} style={{ fontSize: '1.25rem', color: '#fff' }} />}
-                                    component={<Link to={menu.link} style={{ color: '#000', textDecoration: 'none' }} />}
-                                    style={{ padding: '1rem', display: 'flex', alignItems: 'center' }}
+                                    icon={<FontAwesomeIcon icon={menu.icon}  size='lg' />}
+                                    component={<Link to={menu.link}  />}
+                                   
                                 >
                                     {menu.name}
                                 </MenuItem>
@@ -110,11 +97,11 @@ const SidebarMenu = () => {
                     {
                         user.role === "receiver" && (
                             receiverMenu.map((menu) => (
-                                <MenuItem
+                                <MenuItem className='mt-3 mb-3 ' 
                                     key={menu.name}
-                                    icon={<FontAwesomeIcon icon={menu.icon} style={{ fontSize: '1.25rem', color: '#fff' }} />}
-                                    component={<Link to={menu.link} style={{ color: '#000', textDecoration: 'none' }} />}
-                                    style={{ padding: '1rem', display: 'flex', alignItems: 'center' }}
+                                    icon={<FontAwesomeIcon icon={menu.icon} size='lg'  />}
+                                    component={<Link to={menu.link}  />}
+                                   
                                 >
                                     {menu.name}
                                 </MenuItem>
@@ -123,11 +110,11 @@ const SidebarMenu = () => {
                     }{
                         user.role === "admin" && (
                             adminMenu.map((menu) => (
-                                <MenuItem
+                                <MenuItem className='mt-3 mb-3  ' 
                                     key={menu.name}
-                                    icon={<FontAwesomeIcon icon={menu.icon} style={{ fontSize: '1.25rem', color: '#fff' }} />}
-                                    component={<Link to={menu.link} style={{ color: '#000', textDecoration: 'none' }} />}
-                                    style={{ padding: '1rem', display: 'flex', alignItems: 'center' }}
+                                    icon={<FontAwesomeIcon icon={menu.icon} size='lg'  />}
+                                    component={<Link to={menu.link}  />}
+                                    
                                 >
                                     {menu.name}
                                 </MenuItem>

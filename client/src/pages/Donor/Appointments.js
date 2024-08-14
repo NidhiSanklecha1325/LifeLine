@@ -15,7 +15,7 @@ const Appointments = () => {
         console.log(userId)
         const res = await API.get("/donor/get-appointment-list", {params: {id:userId}})
         if(res){
-            setAppointmentList(res.data.appointment)
+            setAppointmentList(res.data.result)
             console.log(res.data.appointment)
 
         }
@@ -45,7 +45,14 @@ const cancelAppointment = async(appointmentId) =>{
           <Toast.Body className='text-white p-4'>{message}</Toast.Body>
         </Toast>
         </ToastContainer>
-             <Table striped bordered hover>
+        <div class=" pt-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h2 class="mb-0">Appointments</h2>
+                        
+                    </div>
+                    <div class="table-responsive">
+             <Table hover className='text-start align-middle'>
              <thead>
                <tr>
                  <th>#</th>
@@ -55,6 +62,8 @@ const cancelAppointment = async(appointmentId) =>{
                  <th>Action</th>
                </tr>
              </thead>
+             {appointmentList.length > 0 ? (
+            <>
              {appointmentList.map((appointment)=>(
              <tbody>
                <tr>
@@ -62,13 +71,24 @@ const cancelAppointment = async(appointmentId) =>{
                  <td>{appointment.locationId.centerName}<br/>{appointment.locationId.centerAddress} </td>
                  <td>{appointment.appointmentDate}</td>
                  <td>{(appointment.appointmentTime).toString().substring(0,5)}</td>
-                 <td><Button onClick={() => cancelAppointment(appointment._id)}>Cancel</Button></td>
+                 <td><Button variant='danger' onClick={() => cancelAppointment(appointment._id)}>Cancel</Button></td>
                </tr>
               
              </tbody>
              ))}
+              </>
+          ) : (
+            <tbody>
+              <tr>
+              <td colSpan={6}><h3>No upcoming appointments.</h3></td>
+              </tr>
+            </tbody>
+            
+           )}
            </Table>
-          
+           </div>
+                </div>
+            </div>
     </Layout>
   )
 }

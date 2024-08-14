@@ -102,18 +102,19 @@ const appointmentListController = async(req,res) =>{
     try {
         console.log(req.query)
         const appointment = await appointmentModel.find({userId : req.query.id}).populate("locationId")
-       /*  let result = []
+        let result = []
         appointment.map((r)=>{
             let appointmentDate = new Date(r.appointmentDate)
             console.log(result)
             if(appointmentDate > new Date()){
                 result.push(r)
             }
-        }) */
+        })
+        console.log(appointment)
         if(appointment){
             return res.status(200).send({
                 success: true,
-                appointment
+                result
          } )
         }
     } catch (error) {
@@ -136,4 +137,22 @@ const deleteAppointmentController = async(req,res) =>{
         console.log(error)
     }
 }
-module.exports = {changePasswordController,searchLocationController,searchCenterController,bookAppointmentController,appointmentListController,deleteAppointmentController}
+const getDonationListController = async(req,res) =>{
+    console.log(req.query.userId)
+    try {
+        const request = await appointmentModel.find({userId: req.query.userId,
+            requestType : "in",
+        }).populate("locationId").populate("userId").sort({"createdAt" : -1})
+        
+        console.log(request)
+        return res.status(200).send({
+            success: true,
+            request
+        })
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
+module.exports = {changePasswordController,searchLocationController,searchCenterController,bookAppointmentController,
+        getDonationListController,appointmentListController,deleteAppointmentController}

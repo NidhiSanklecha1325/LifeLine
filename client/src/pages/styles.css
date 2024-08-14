@@ -379,33 +379,39 @@ header .btn {
   height: 30px; /* Adjust size */
   background: rgb(235, 92, 92); /* Darker blood red */
   border-radius: 50%; /* Make the shape circular */
-  animation: drop 4s infinite;
+  animation: drop 4s 3;
+  top: 10%;
   opacity: 0.8;
 }
 
 /* Position and delay adjustments for multiple droplets */
 .blood-droplet:nth-child(1) {
   left: 10%;
+  top: 0px;
   animation-delay: 0s;
 }
 
 .blood-droplet:nth-child(2) {
   left: 30%;
+  top: 50%;
   animation-delay: 0.5s;
 }
 
 .blood-droplet:nth-child(3) {
   left: 50%;
+  top: 90%;
   animation-delay: 1s;
 }
 
 .blood-droplet:nth-child(4) {
   left: 70%;
+  top: 20%;
   animation-delay: 1.5s;
 }
 
 .blood-droplet:nth-child(5) {
   left: 90%;
+  top: 45%;
   animation-delay: 2s;
 }
 

@@ -60,7 +60,8 @@ const Home = () => {
       <header className="bg-primary text-white text-center py-5 mb-4 custom-header">
             <div className="container">
               <h1 className="display-4">Welcome to LifeLine</h1>
-              <p className="lead">Find nearby donor centers and filter by blood type availability</p>
+              <p className="lead">Blood is the most precious gift that anyone can give to another person. <br/>
+              Donating blood not only saves the life also save donor's lives.</p>
             </div>
           </header>
           

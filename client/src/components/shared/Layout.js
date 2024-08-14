@@ -15,11 +15,11 @@ const Layout = ({ children }) => {
         {
           user ? (
             <div className='content row'>
-              <div className='col-lg-3' style={{width: "20% !important"}}>
+              <div className='col-lg-3' >
                 <SidebarMenu />
               </div>
               <div className='col-lg-9'>
-                <div className='container mt-5'>
+                <div className='container mt-3' style={{height: "90vh"}}>
 
                 {children}
                 </div>

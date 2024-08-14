@@ -3,7 +3,7 @@
     background-color: #dc3545; /* Red background */
     color: #fff; /* White text */
     height: 100vh;
-    width: 90% !important;
+    width: 100% ;
     position: fixed;
     top: 0;
     left: 0;
@@ -11,29 +11,38 @@
     flex-direction: column;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
+.css-1wvake5 {
+    width: 100% !important;
+}
+.css-1wvake5.ps-collapsed {
+    width: 80px !important;
+}
+.ps-collapsed h2{
+    display: none;
+}
 
 /* Styling for the sidebar header */
 .sidebar-header {
-    padding: 1rem;
+    padding: 1rem 24px;
     display: flex;
     align-items: center;
-    justify-content: center; /* Center text horizontally */
     background-color: #c82333; /* Slightly darker red for the header */
 }
 
 /* Menu hamburger icon */
 .sidebar-header .hamburger {
-    font-size: 1.5rem; /* Adjust font size for the icon */
+    font-size: 2.5rem; /* Adjust font size for the icon */
     cursor: pointer;
     color: #fff; /* White color for the icon */
-    margin-right: 1rem; /* Space between icon and text */
+     /* Space between icon and text */
 }
 
 /* Menu text */
-.sidebar-header .menu-text {
+.sidebar-header h2 {
     color: #fff; /* White text color */
     margin: 0;
-    font-size: 1.25rem; /* Adjust font size as needed */
+    margin-left: 1rem;
+    font-size: 1.5rem; /* Adjust font size as needed */
     text-align: center; /* Center text */
 }
 
@@ -45,7 +54,7 @@
 
 /* Menu items */
 .sidebar-nav .nav-link {
-    color: #000; /* Black text color */
+    /* Black text color */
     font-weight: bold;
     padding: 1rem;
     display: flex;
@@ -71,4 +80,15 @@
     background-color: #c82333;
     color: #fff;
     text-align: center;
+}
+.css-wx7wi4{
+    width: 50px !important; /* Adjust font size for the icon */
+    cursor: pointer;
+    color: #fff !important;
+}
+.ps-menu-label{
+    font-size: 1.5rem;
+}
+.ps-menuitem-root .ps-active{
+    background-color: #fff;
 }
